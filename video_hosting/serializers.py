@@ -25,7 +25,11 @@ from .models import Video
 #         return instance
 
 class VideoSerializer(serializers.ModelSerializer):
+    file = serializers.FileField(
+                                 validators=[FileExtensionValidator(allowed_extensions=['mp4', "mvk"])],
+                                 write_only=True)
+    user = serializers.PrimaryKeyRelatedField(default=serializers.CurrentUserDefault, read_only=True)
+
     class Meta:
         model = Video
-        fields = "__all__"
-
+        fields = ['id', 'title', 'description', 'image', 'file', 'created_at', 'user']

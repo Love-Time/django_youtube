@@ -12,6 +12,8 @@ from .serializers import VideoSerializer
 from .services import open_file
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .permissions import *
 
 
 def get_list_video(request):
@@ -35,21 +37,22 @@ def get_streaming_video(request, pk: int):
 
 
 ##############
-class VideoViewSet(viewsets.ModelViewSet):
+# class VideoViewSet(viewsets.ModelViewSet):
+#     queryset = Video.objects.all()
+#     serializer_class = VideoSerializer
+
+
+class VideoApiList(generics.ListCreateAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
-#Ниже нахуй не надо, класс выше делает всю работу
-# class VideoApiList(generics.ListCreateAPIView):
-#     queryset = Video.objects.all()
-#     serializer_class = VideoSerializer
-#
-#
-#
-# class VideoApiDetailView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Video.objects.all()
-#     serializer_class = VideoSerializer
-#Ниже нахуй не надо, 2 класса выше делают всю работу
+
+class VideoApiDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
+    permission_classes = (IsOwnerOrAdminOrReadOnly,)
+# Ниже нахуй не надо, 2 класса выше делают всю работу
 # class VideoApiView(APIView):
 #     def get(self, request, *args, **kwargs):
 #         pk = kwargs.get('pk', None)
