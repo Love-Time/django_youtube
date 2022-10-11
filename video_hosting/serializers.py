@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
+from rest_framework.fields import empty, Field
 from rest_framework.response import Response
 
 from .models import Video
@@ -24,12 +26,24 @@ from .models import Video
 #         instance.save()
 #         return instance
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
+
+
 class VideoSerializer(serializers.ModelSerializer):
     file = serializers.FileField(
-                                 validators=[FileExtensionValidator(allowed_extensions=['mp4', "mvk"])],
-                                 write_only=True)
-    user = serializers.PrimaryKeyRelatedField(default=serializers.CurrentUserDefault, read_only=True)
-
+        validators=[FileExtensionValidator(allowed_extensions=['mp4', "mvk"])],
+        write_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    owner = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
     class Meta:
         model = Video
-        fields = ['id', 'title', 'description', 'image', 'file', 'created_at', 'user']
+        fields = ['id', 'title', 'description', 'image', 'file', 'created_at', 'user', 'owner']
+
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+        return instance
+
+
