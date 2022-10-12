@@ -15,7 +15,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        return obj.user == request.user
+        return obj.channel == request.user.channel
 
 
 class IsAuthenticatedOrOwnerOrReadOnly(IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, permissions.BasePermission):

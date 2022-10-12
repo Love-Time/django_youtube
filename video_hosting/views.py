@@ -35,6 +35,12 @@ class VideoViewSet(viewsets.ModelViewSet):
     serializer_class = VideoSerializer
     permission_classes = (IsAuthenticatedOrOwnerOrReadOnly,)
 
+    def get_serializer_context(self):
+        context = super(VideoViewSet, self).get_serializer_context()
+        self.request.channel = self.request.user.channel
+        context.update({"request": self.request})
+        return context
+
 # class VideoApiList(generics.ListCreateAPIView):
 #     queryset = Video.objects.all()
 #     serializer_class = VideoSerializer

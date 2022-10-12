@@ -15,10 +15,19 @@ class Video(models.Model):
 
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
+    channel = models.ForeignKey("Channel", verbose_name="Канал", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ('-created_at',)
+
+
+class Channel(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    name = models.CharField(max_length=40)
+    description = models.TextField()
+    image = models.ImageField(upload_to='image/profile/image/%Y/%m/', null=True)
+    banner = models.ImageField(upload_to='image/profile/banner/%Y/%m/', null=True)
+    logo = models.ImageField(upload_to='image/profile/logo/%Y/%m/', null=True)
