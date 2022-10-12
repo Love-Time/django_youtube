@@ -1,18 +1,11 @@
-from io import BytesIO
-
-from django.core.files.storage import FileSystemStorage
-from django.forms import model_to_dict
-from django.http import StreamingHttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import StreamingHttpResponse
 from django.shortcuts import render, get_object_or_404
-from rest_framework.response import Response
 
-from .forms import ResumeForm
 from .models import Video
 from .serializers import VideoSerializer
 from .services import open_file
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .permissions import *
 
 
@@ -37,21 +30,21 @@ def get_streaming_video(request, pk: int):
 
 
 ##############
-# class VideoViewSet(viewsets.ModelViewSet):
+class VideoViewSet(viewsets.ModelViewSet):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
+    permission_classes = (IsAuthenticatedOrOwnerOrReadOnly,)
+
+# class VideoApiList(generics.ListCreateAPIView):
 #     queryset = Video.objects.all()
 #     serializer_class = VideoSerializer
-
-
-class VideoApiList(generics.ListCreateAPIView):
-    queryset = Video.objects.all()
-    serializer_class = VideoSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-
-class VideoApiDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Video.objects.all()
-    serializer_class = VideoSerializer
-    permission_classes = (IsOwnerOrAdminOrReadOnly,)
+#     permission_classes = (IsAuthenticatedOrReadOnly,)
+#
+#
+# class VideoApiDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Video.objects.all()
+#     serializer_class = VideoSerializer
+#     permission_classes = (IsOwnerOrAdminOrReadOnly,)
 # Ниже нахуй не надо, 2 класса выше делают всю работу
 # class VideoApiView(APIView):
 #     def get(self, request, *args, **kwargs):
