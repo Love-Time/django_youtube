@@ -101,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+AUTHENTICATION_BACKENDS = ['video_hosting.models.EmailBackend']
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 

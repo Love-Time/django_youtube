@@ -1,12 +1,14 @@
 from django.http import StreamingHttpResponse
 from django.shortcuts import render, get_object_or_404
+from rest_framework.viewsets import GenericViewSet
 
 from .models import Video
-from .serializers import VideoSerializer
+from .serializers import VideoSerializer, UserSerializer
 from .services import open_file
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, mixins
 from rest_framework.views import APIView
 from .permissions import *
+from django.contrib.auth.models import User
 
 
 def get_list_video(request):
@@ -35,12 +37,15 @@ class VideoViewSet(viewsets.ModelViewSet):
     serializer_class = VideoSerializer
     permission_classes = (IsAuthenticatedOrOwnerOrReadOnly,)
 
-    def get_serializer_context(self):
-        context = super(VideoViewSet, self).get_serializer_context()
-        self.request.channel = self.request.user.channel
-        context.update({"request": self.request})
-        return context
 
+class UserViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  GenericViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = (IsOwner,)
 # class VideoApiList(generics.ListCreateAPIView):
 #     queryset = Video.objects.all()
 #     serializer_class = VideoSerializer

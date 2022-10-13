@@ -27,14 +27,10 @@ from .models import Video, Channel
 #         instance.save()
 #         return instance
 class CurrentChannelDefault:
-    """
-    May be applied as a `default=...` value on a serializer field.
-    Returns the current user.
-    """
     requires_context = True
 
     def __call__(self, serializer_field):
-        return serializer_field.context['request'].channel
+        return serializer_field.context['request'].user.channel
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -49,25 +45,17 @@ class ChannelSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+
 class VideoSerializer(serializers.ModelSerializer):
     file = serializers.FileField(
         validators=[FileExtensionValidator(allowed_extensions=['mp4', "mvk"])],
         write_only=True)
     channel = serializers.HiddenField(default=CurrentChannelDefault())
-    owner = ChannelSerializer(default=CurrentChannelDefault(), read_only=True)
-
-
+    owner = ChannelSerializer(default=CurrentChannelDefault(), source='channel',read_only=True)
 
     class Meta:
         model = Video
-        fields = ['id', 'title', 'description', 'image', 'file', 'created_at', 'channel','owner']
-
-    def create(self, validated_data):
-        instance = super().create(validated_data)
-        return instance
+        fields = ['id', 'title', 'description', 'image', 'file', 'created_at', 'channel', 'owner']
 
 
-class ChannelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Channel
-        fields = "__all__"
+

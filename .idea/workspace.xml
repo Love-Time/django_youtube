@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="61cf928d-1a0e-4e21-8f89-6fabaec2a940" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/video_hosting/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/video_hosting/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/permissions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/video_hosting/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/video_hosting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
