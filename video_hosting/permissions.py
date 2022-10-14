@@ -1,6 +1,21 @@
+from django.contrib.auth.models import AnonymousUser
 from rest_framework import permissions
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+
+
+class IsEmailOrReadOnly(permissions.BasePermission):
+    """
+    The request is authenticated as a user, or is a read-only request.
+    """
+    def has_permission(self, request, view):
+        return bool(
+            request.method in permissions.SAFE_METHODS or
+            request.user and
+            request.user.is_authenticated and
+            request.user.profile.is_email
+
+
+        )
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -20,9 +35,16 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
 class IsOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-
         return obj == request.user
 
-
-class IsAuthenticatedOrOwnerOrReadOnly(IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly, permissions.BasePermission):
+class IsAuthenticatedOrOwnerOrReadOnly(IsEmailOrReadOnly, IsOwnerOrReadOnly, permissions.BasePermission):
     pass
+
+
+class IsOnlyAnonymousRegistration(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method == "POST":
+            return request.user == AnonymousUser
+
+        return False
+

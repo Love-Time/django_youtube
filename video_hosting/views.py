@@ -33,7 +33,7 @@ def get_streaming_video(request, pk: int):
 
 ##############
 class VideoViewSet(viewsets.ModelViewSet):
-    queryset = Video.objects.all()
+    queryset = Video.objects.all().select_related('channel')
     serializer_class = VideoSerializer
     permission_classes = (IsAuthenticatedOrOwnerOrReadOnly,)
 
@@ -44,7 +44,7 @@ class UserViewSet(mixins.CreateModelMixin,
                   mixins.DestroyModelMixin,
                   GenericViewSet):
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = User.objects.all().select_related('profile')
     permission_classes = (IsOwner,)
 # class VideoApiList(generics.ListCreateAPIView):
 #     queryset = Video.objects.all()

@@ -1,31 +1,9 @@
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
-from django.forms import model_to_dict
 from rest_framework import serializers
-from rest_framework.fields import empty, Field
-from rest_framework.response import Response
-
-from .models import Video, Channel
+from .models import Video, Channel, Profile
 
 
-# class VideoSerializer(serializers.Serializer):
-#     id = serializers.IntegerField(read_only=True, label='id')
-#     title = serializers.CharField(max_length=100)
-#     description = serializers.CharField()
-#     image = serializers.ImageField()
-#     file = serializers.FileField(validators=[FileExtensionValidator(allowed_extensions=['mp4', "mvk"])])
-#     created_at = serializers.DateTimeField(read_only=True)
-#
-#     def create(self, validated_data):
-#         return Video.objects.create(**validated_data)
-#
-#     def update(self, instance, validated_data):
-#         instance.title = validated_data.get('title', instance.title)
-#         instance.description = validated_data.get('description', instance.description)
-#         instance.image = validated_data.get('image', instance.image)
-#         instance.file = validated_data.get('file', instance.file)
-#         instance.save()
-#         return instance
 class CurrentChannelDefault:
     requires_context = True
 
@@ -33,17 +11,28 @@ class CurrentChannelDefault:
         return serializer_field.context['request'].user.channel
 
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['is_email', 'is_block']
+
+
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    profile = ProfileSerializer(read_only=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username']
+        fields = ['id', 'username', "email", 'first_name', "last_name", 'password', 'profile', ]
+
+        read_only_fields = ['email', 'profile']
 
 
 class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Channel
         fields = "__all__"
-
+        depth = 1
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -51,11 +40,9 @@ class VideoSerializer(serializers.ModelSerializer):
         validators=[FileExtensionValidator(allowed_extensions=['mp4', "mvk"])],
         write_only=True)
     channel = serializers.HiddenField(default=CurrentChannelDefault())
-    owner = ChannelSerializer(default=CurrentChannelDefault(), source='channel',read_only=True)
+    owner = ChannelSerializer(many=False, source='channel', read_only=True)
 
     class Meta:
         model = Video
         fields = ['id', 'title', 'description', 'image', 'file', 'created_at', 'channel', 'owner']
-
-
-
+        depth = 1
