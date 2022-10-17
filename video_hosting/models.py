@@ -30,6 +30,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     is_email = models.BooleanField(default=0)
     is_block = models.BooleanField(default=0)
+     
 
 
 @receiver(post_save, sender=User)
@@ -60,6 +61,5 @@ def create_user_channel(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_channel(sender, instance, **kwargs):
     instance.channel.save()
-
 
 

@@ -149,17 +149,17 @@ REST_FRAMEWORK = {
 }
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST = 'ssl://smtp.mail.ru'
 EMAIL_HOST_USER = 'youtube.clone@mail.ru'
-EMAIL_HOST_PASSWORD = 'w7YBPRmUy8JYTvFGq2Az'
-EMAIL_PORT = 465
+EMAIL_HOST_PASSWORD = 'TsC3uFsbEwZtpQRkqMNt'
+EMAIL_PORT = 587
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'SEND_CONFRIMATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': True,
     'SERIALIZERS': {
         'user_create': 'video_hosting.serializers.UserCreateSerializer',
     },
