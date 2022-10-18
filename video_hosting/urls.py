@@ -5,7 +5,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'video', VideoViewSet)
-router.register(r'profile', UserViewSet)
+
 
 urlpatterns = [
     path('stream/<int:pk>/', views.get_streaming_video, name='stream'),

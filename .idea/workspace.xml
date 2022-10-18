@@ -4,9 +4,26 @@
     <list default="true" id="61cf928d-1a0e-4e21-8f89-6fabaec2a940" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0002_remove_video_create_at_video_created_at.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0003_alter_video_image.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0004_alter_video_file_alter_video_image.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0005_alter_video_options.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0006_alter_video_file_alter_video_image.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0007_alter_video_file_alter_video_image.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0008_video_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0009_channel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0010_remove_video_user_video_owner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0011_rename_owner_video_channel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0012_channel_is_active_alter_channel_description_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/migrations/0013_remove_profile_id_alter_profile_user.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/video_hosting/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/video_hosting/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/permissions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/video_hosting/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_hosting/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
