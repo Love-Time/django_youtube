@@ -13,14 +13,4 @@ urlpatterns = [
     path('', views.get_list_video, name='home'),
     path('api/v1/drf-auth/', include('rest_framework.urls')),
     path('api/v1/', include(router.urls)),
-
-    # path('api/v1/video/', include(router.urls)),
-    # path('api/v1/video/', include(router.urls)),
-    # path('api/v1/video/<int:pk>/', VideoViewSet.as_view())
-
-    # path('api/v1/videolist/', VideoApiList.as_view()),
-    # path('api/v1/videolist/<int:pk>/', VideoApiDetailView.as_view()),
-
-    path('api/v1/auth/', include('djoser.urls')),
-    re_path(r'^auth/', include('djoser.urls.authtoken'))
 ]

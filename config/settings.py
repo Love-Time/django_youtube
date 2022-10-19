@@ -166,7 +166,7 @@ DJOSER = {
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
     'SERIALIZERS': {
-        # 'user_create': 'video_hosting.serializers.UserCreateSerializer',
+         'user_create': 'users.serializers.UserCreateSerializer',
     },
 
 }

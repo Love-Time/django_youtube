@@ -3,13 +3,13 @@ from rest_framework import permissions
 
 
 
-class IsEmailOrReadOnly(permissions.BasePermission):
+class IsNotBlockOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         return bool(
             request.method in permissions.SAFE_METHODS or
             request.user and
             request.user.is_authenticated and
-            request.user.profile.is_email
+            not request.user.is_block
         )
 
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -32,7 +32,7 @@ class IsOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj == request.user
 
-class IsAuthenticatedOrOwnerOrReadOnly(IsEmailOrReadOnly, IsOwnerOrReadOnly, permissions.BasePermission):
+class IsAuthenticatedOrOwnerOrReadOnly(IsNotBlockOrReadOnly, IsOwnerOrReadOnly, permissions.BasePermission):
     pass
 
 

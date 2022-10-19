@@ -1,23 +1,16 @@
-
 from django.core.validators import FileExtensionValidator
 
 from rest_framework import serializers
 
-
 from users.models import CustomUser
 from .models import Video, Channel
+
 
 class CurrentChannelDefault:
     requires_context = True
 
     def __call__(self, serializer_field):
         return serializer_field.context['request'].user.channel
-
-
-
-
-
-
 
 
 class ChannelSerializer(serializers.ModelSerializer):
@@ -37,13 +30,9 @@ class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = ['id', 'title', 'description', 'image', 'file', 'created_at', 'channel', 'owner']
-        depth = 1
 
 
-
+class VideoUpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['id', 'email', 'username', 'password', 'first_name', 'last_name', 'is_active']
-        extra_kwargs = {'password': {'write_only': True},
-                        'first_name': {'required': False},
-                        'last_name': {'required': False}}
+        model = Video
+        fields = ['id', 'title', 'description', 'image']

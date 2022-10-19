@@ -1,14 +1,13 @@
 from django.http import StreamingHttpResponse
 from django.shortcuts import render, get_object_or_404
 
-
-
 from .models import Video
-from .serializers import VideoSerializer
+from .serializers import *
 from .services import open_file
 from rest_framework import generics, viewsets, mixins
 
 from users.permissions import *
+from rest_framework.permissions import SAFE_METHODS
 
 
 def get_list_video(request):
@@ -36,7 +35,16 @@ class VideoViewSet(viewsets.ModelViewSet):
     queryset = Video.objects.all().select_related('channel')
     serializer_class = VideoSerializer
     permission_classes = (IsAuthenticatedOrOwnerOrReadOnly,)
+    http_method_names = ('get', 'head', 'options', 'post', "patch", 'delete')
 
+
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+
+        if self.request.method in ('PUT', 'PATCH'):
+            serializer_class = VideoUpdateSerializer
+
+        return serializer_class
 
 # class VideoApiList(generics.ListCreateAPIView):
 #     queryset = Video.objects.all()
