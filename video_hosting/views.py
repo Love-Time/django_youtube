@@ -6,7 +6,8 @@ from .serializers import *
 from .services import open_file
 from rest_framework import generics, viewsets, mixins
 
-from users.permissions import *
+from users.permissions import IsAuthenticatedOrOwnerOrReadOnly
+from .permissions import *
 from rest_framework.permissions import SAFE_METHODS
 
 
@@ -37,7 +38,6 @@ class VideoViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrOwnerOrReadOnly,)
     http_method_names = ('get', 'head', 'options', 'post', "patch", 'delete')
 
-
     def get_serializer_class(self):
         serializer_class = self.serializer_class
 
@@ -45,6 +45,19 @@ class VideoViewSet(viewsets.ModelViewSet):
             serializer_class = VideoUpdateSerializer
 
         return serializer_class
+
+
+class ChannelViewSet(viewsets.ModelViewSet):
+    queryset = Channel.objects.all()
+    serializer_class = ChannelSerializer
+    permission_classes = (IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        if self.action == 'list':
+            return Channel.objects.filter(is_active=True)
+        else:
+            return Channel.objects.all()
+
 
 # class VideoApiList(generics.ListCreateAPIView):
 #     queryset = Video.objects.all()

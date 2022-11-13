@@ -1,9 +1,7 @@
-
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from users.models import CustomUser
 
 
@@ -27,6 +25,7 @@ class Video(models.Model):
     class Meta:
         ordering = ('-created_at',)
 
+
 class Channel(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     name = models.CharField(max_length=40, default="Channel Name")
@@ -37,12 +36,12 @@ class Channel(models.Model):
     is_active = models.BooleanField(default=0)
 
 
-
 @receiver(post_save, sender=CustomUser)
 def create_user_channel(sender, instance, created, **kwargs):
     if created:
         Channel.objects.create(user=instance)
+
+
 @receiver(post_save, sender=CustomUser)
 def save_user_channel(sender, instance, **kwargs):
     instance.channel.save()
-
